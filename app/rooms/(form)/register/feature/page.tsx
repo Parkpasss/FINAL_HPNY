@@ -1,23 +1,23 @@
-'use client'
+"use client"
 
-import { roomFormState } from '@/atom'
-import { useRouter } from 'next/navigation'
-import { useRecoilState } from 'recoil'
-import { useForm } from 'react-hook-form'
-import { useEffect } from 'react'
-import Stepper from '@/components/Form/Stepper'
-import NextButton from '@/components/Form/NextButton'
-import cn from 'classnames'
+import { roomFormState } from "@/atom"
+import { useRouter } from "next/navigation"
+import { useRecoilState } from "recoil"
+import { useForm } from "react-hook-form"
+import { useEffect } from "react"
+import Stepper from "@/components/Form/Stepper"
+import NextButton from "@/components/Form/NextButton"
+import cn from "classnames"
 import {
   AiOutlineCheckCircle,
   AiOutlineDesktop,
   AiOutlineWifi,
-} from 'react-icons/ai'
-import { BsDoorClosed } from 'react-icons/bs'
-import { PiBathtub, PiMountainsDuotone } from 'react-icons/pi'
-import { MdOutlineLocalLaundryService } from 'react-icons/md'
-import { LuParkingCircle, LuWind } from 'react-icons/lu'
-import { GiBarbecue } from 'react-icons/gi'
+} from "react-icons/ai"
+import { BsDoorClosed } from "react-icons/bs"
+import { PiBathtub, PiMountainsDuotone } from "react-icons/pi"
+import { MdOutlineLocalLaundryService } from "react-icons/md"
+import { LuParkingCircle, LuWind } from "react-icons/lu"
+import { GiBarbecue } from "react-icons/gi"
 
 export interface RoomFeatureProps {
   freeCancel?: boolean
@@ -57,7 +57,7 @@ export default function RoomRegisterFeature() {
       hasBarbeque: data.hasBarbeque,
       hasFreeParking: data.hasFreeParking,
     })
-    router.push('/rooms/register/image')
+    router.push("/rooms/register/image")
   }
 
   const onClick = (
@@ -69,16 +69,16 @@ export default function RoomRegisterFeature() {
 
   useEffect(() => {
     if (roomForm) {
-      setValue('freeCancel', roomForm?.freeCancel)
-      setValue('selfCheckIn', roomForm?.selfCheckIn)
-      setValue('officeSpace', roomForm?.officeSpace)
-      setValue('hasMountainView', roomForm?.hasMountainView)
-      setValue('hasShampoo', roomForm?.hasShampoo)
-      setValue('hasFreeLaundry', roomForm?.hasFreeLaundry)
-      setValue('hasAirConditioner', roomForm?.hasAirConditioner)
-      setValue('hasWifi', roomForm?.hasWifi)
-      setValue('hasBarbeque', roomForm?.hasBarbeque)
-      setValue('hasFreeParking', roomForm?.hasFreeParking)
+      setValue("freeCancel", roomForm?.freeCancel)
+      setValue("selfCheckIn", roomForm?.selfCheckIn)
+      setValue("officeSpace", roomForm?.officeSpace)
+      setValue("hasMountainView", roomForm?.hasMountainView)
+      setValue("hasShampoo", roomForm?.hasShampoo)
+      setValue("hasFreeLaundry", roomForm?.hasFreeLaundry)
+      setValue("hasAirConditioner", roomForm?.hasAirConditioner)
+      setValue("hasWifi", roomForm?.hasWifi)
+      setValue("hasBarbeque", roomForm?.hasBarbeque)
+      setValue("hasFreeParking", roomForm?.hasFreeParking)
     }
   }, [roomForm, setValue])
 
@@ -95,14 +95,14 @@ export default function RoomRegisterFeature() {
         <section className="grid grid-cols-2 md:grid-cols-3 gap-4 px-10">
           <label
             className={cn(
-              'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('freeCancel') },
+              "border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2",
+              { "border-2 border-black": !!watch("freeCancel") },
             )}
           >
             <input
               type="checkbox"
-              onClick={(e: any) => onClick(e, 'freeCancel')}
-              {...register('freeCancel')}
+              onClick={(e: any) => onClick(e, "freeCancel")}
+              {...register("freeCancel")}
               className="hidden"
             />
             <AiOutlineCheckCircle className="text-lg md:text-2xl" />
@@ -110,14 +110,14 @@ export default function RoomRegisterFeature() {
           </label>
           <label
             className={cn(
-              'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('selfCheckIn') },
+              "border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2",
+              { "border-2 border-black": !!watch("selfCheckIn") },
             )}
           >
             <input
               type="checkbox"
-              onClick={(e: any) => onClick(e, 'selfCheckIn')}
-              {...register('selfCheckIn')}
+              onClick={(e: any) => onClick(e, "selfCheckIn")}
+              {...register("selfCheckIn")}
               className="hidden"
             />
             <BsDoorClosed className="text-lg md:text-2xl" />
@@ -125,14 +125,14 @@ export default function RoomRegisterFeature() {
           </label>
           <label
             className={cn(
-              'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('officeSpace') },
+              "border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2",
+              { "border-2 border-black": !!watch("officeSpace") },
             )}
           >
             <input
               type="checkbox"
-              onClick={(e: any) => onClick(e, 'officeSpace')}
-              {...register('officeSpace')}
+              onClick={(e: any) => onClick(e, "officeSpace")}
+              {...register("officeSpace")}
               className="hidden"
             />
             <AiOutlineDesktop className="text-lg md:text-2xl" />
@@ -140,14 +140,14 @@ export default function RoomRegisterFeature() {
           </label>
           <label
             className={cn(
-              'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('hasMountainView') },
+              "border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2",
+              { "border-2 border-black": !!watch("hasMountainView") },
             )}
           >
             <input
               type="checkbox"
-              onClick={(e: any) => onClick(e, 'hasMountainView')}
-              {...register('hasMountainView')}
+              onClick={(e: any) => onClick(e, "hasMountainView")}
+              {...register("hasMountainView")}
               className="hidden"
             />
             <PiMountainsDuotone className="text-lg md:text-2xl" />
@@ -155,14 +155,14 @@ export default function RoomRegisterFeature() {
           </label>
           <label
             className={cn(
-              'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('hasShampoo') },
+              "border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2",
+              { "border-2 border-black": !!watch("hasShampoo") },
             )}
           >
             <input
               type="checkbox"
-              onClick={(e: any) => onClick(e, 'hasShampoo')}
-              {...register('hasShampoo')}
+              onClick={(e: any) => onClick(e, "hasShampoo")}
+              {...register("hasShampoo")}
               className="hidden"
             />
             <PiBathtub className="text-lg md:text-2xl" />
@@ -170,14 +170,14 @@ export default function RoomRegisterFeature() {
           </label>
           <label
             className={cn(
-              'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('hasFreeLaundry') },
+              "border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2",
+              { "border-2 border-black": !!watch("hasFreeLaundry") },
             )}
           >
             <input
               type="checkbox"
-              onClick={(e: any) => onClick(e, 'hasFreeLaundry')}
-              {...register('hasFreeLaundry')}
+              onClick={(e: any) => onClick(e, "hasFreeLaundry")}
+              {...register("hasFreeLaundry")}
               className="hidden"
             />
             <MdOutlineLocalLaundryService className="text-lg md:text-2xl" />
@@ -185,14 +185,14 @@ export default function RoomRegisterFeature() {
           </label>
           <label
             className={cn(
-              'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('hasAirConditioner') },
+              "border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2",
+              { "border-2 border-black": !!watch("hasAirConditioner") },
             )}
           >
             <input
               type="checkbox"
-              onClick={(e: any) => onClick(e, 'hasAirConditioner')}
-              {...register('hasAirConditioner')}
+              onClick={(e: any) => onClick(e, "hasAirConditioner")}
+              {...register("hasAirConditioner")}
               className="hidden"
             />
             <LuWind className="text-lg md:text-2xl" />
@@ -200,14 +200,14 @@ export default function RoomRegisterFeature() {
           </label>
           <label
             className={cn(
-              'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('hasWifi') },
+              "border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2",
+              { "border-2 border-black": !!watch("hasWifi") },
             )}
           >
             <input
               type="checkbox"
-              onClick={(e: any) => onClick(e, 'hasWifi')}
-              {...register('hasWifi')}
+              onClick={(e: any) => onClick(e, "hasWifi")}
+              {...register("hasWifi")}
               className="hidden"
             />
             <AiOutlineWifi className="text-lg md:text-2xl" />
@@ -215,14 +215,14 @@ export default function RoomRegisterFeature() {
           </label>
           <label
             className={cn(
-              'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('hasBarbeque') },
+              "border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2",
+              { "border-2 border-black": !!watch("hasBarbeque") },
             )}
           >
             <input
               type="checkbox"
-              onClick={(e: any) => onClick(e, 'hasBarbeque')}
-              {...register('hasBarbeque')}
+              onClick={(e: any) => onClick(e, "hasBarbeque")}
+              {...register("hasBarbeque")}
               className="hidden"
             />
             <GiBarbecue className="text-lg md:text-2xl" />
@@ -230,14 +230,14 @@ export default function RoomRegisterFeature() {
           </label>
           <label
             className={cn(
-              'border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2',
-              { 'border-2 border-black': !!watch('hasFreeParking') },
+              "border-2 rounded-md hover:bg-black/5 px-6 py-4 flex flex-col gap-2",
+              { "border-2 border-black": !!watch("hasFreeParking") },
             )}
           >
             <input
               type="checkbox"
-              onClick={(e: any) => onClick(e, 'hasFreeParking')}
-              {...register('hasFreeParking')}
+              onClick={(e: any) => onClick(e, "hasFreeParking")}
+              {...register("hasFreeParking")}
               className="hidden"
             />
             <LuParkingCircle className="text-lg md:text-2xl" />

@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react"
 
-import NextButton from '@/components/Form/NextButton'
-import Stepper from '@/components/Form/Stepper'
-import { CATEGORY_DATA } from '@/constants'
+import NextButton from "@/components/Form/NextButton"
+import Stepper from "@/components/Form/Stepper"
+import { CATEGORY_DATA } from "@/constants"
 
-import cn from 'classnames'
-import { useRecoilState } from 'recoil'
-import { roomFormState } from '@/atom'
-import { useRouter } from 'next/navigation'
+import cn from "classnames"
+import { useRecoilState } from "recoil"
+import { roomFormState } from "@/atom"
+import { useRouter } from "next/navigation"
 
 export default function RoomRegisterCategory() {
   const router = useRouter()
   const [roomForm, setRoomForm] = useRecoilState(roomFormState)
-  const [selectedCategory, setSelectedCategory] = useState<string>('')
+  const [selectedCategory, setSelectedCategory] = useState<string>("")
   const [disableSubmit, setDisableSubmit] = useState<boolean>(false)
 
   const handleSubmit = () => {
@@ -22,11 +22,11 @@ export default function RoomRegisterCategory() {
       ...roomForm,
       category: selectedCategory,
     })
-    router.push('/rooms/register/info')
+    router.push("/rooms/register/info")
   }
 
   useEffect(() => {
-    setSelectedCategory(roomForm?.category || '')
+    setSelectedCategory(roomForm?.category || "")
   }, [roomForm])
 
   return (
@@ -43,9 +43,9 @@ export default function RoomRegisterCategory() {
               key={category.title}
               onClick={() => setSelectedCategory(category.title)}
               className={cn(
-                'border-2 hover:bg-black/5 rounded-md px-6 py-4 flex flex-col gap-2',
+                "border-2 hover:bg-black/5 rounded-md px-6 py-4 flex flex-col gap-2",
                 {
-                  'border-2 border-black': selectedCategory === category.title,
+                  "border-2 border-black": selectedCategory === category.title,
                 },
               )}
             >

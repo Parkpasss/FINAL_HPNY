@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { signIn, useSession } from 'next-auth/react'
-import { FcGoogle } from 'react-icons/fc'
-import { SiNaver } from 'react-icons/si'
-import { RiKakaoTalkFill } from 'react-icons/ri'
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { signIn, useSession } from "next-auth/react"
+import { FcGoogle } from "react-icons/fc"
+import { SiNaver } from "react-icons/si"
+import { RiKakaoTalkFill } from "react-icons/ri"
 
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast"
 
 export default function SignInPage() {
   const router = useRouter()
@@ -17,35 +17,35 @@ export default function SignInPage() {
 
   const handleClickGoogle = () => {
     try {
-      signIn('google', { callbackUrl: '/' })
+      signIn("google", { callbackUrl: "/" })
     } catch (e) {
       console.log(e)
-      toast.error('다시 시도해주세요')
+      toast.error("다시 시도해주세요")
     }
   }
 
   const handleClickNaver = () => {
     try {
-      signIn('naver', { callbackUrl: '/' })
+      signIn("naver", { callbackUrl: "/" })
     } catch (e) {
       console.log(e)
-      toast.error('다시 시도해주세요')
+      toast.error("다시 시도해주세요")
     }
   }
 
   const handleClickKakao = () => {
     try {
-      signIn('kakao', { callbackUrl: '/' })
+      signIn("kakao", { callbackUrl: "/" })
     } catch (e) {
       console.log(e)
-      toast.error('다시 시도해주세요')
+      toast.error("다시 시도해주세요")
     }
   }
 
   useEffect(() => {
-    if (status === 'authenticated') {
-      toast.error('접근할 수 없습니다.')
-      router.replace('/')
+    if (status === "authenticated") {
+      toast.error("접근할 수 없습니다.")
+      router.replace("/")
     }
   }, [router, status])
 

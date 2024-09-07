@@ -4,6 +4,6 @@
   "rules": {
     "prettier/prettier": "warn",
     "react-hooks/rules-of-hooks": "warn",
-    "react/display-name":"warn"
+    "react/display-name": "warn"
   }
 }

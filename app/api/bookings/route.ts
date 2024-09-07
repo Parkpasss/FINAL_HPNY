@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '../auth/[...nextauth]/route'
-import prisma from '@/db'
+import { NextResponse } from "next/server"
+import { getServerSession } from "next-auth"
+import { authOptions } from "../auth/[...nextauth]/route"
+import prisma from "@/db"
 interface BookingProps {
   roomId: string
   checkIn: string
@@ -13,15 +13,15 @@ interface BookingProps {
 
 interface RefundProps {
   id: string
-  status: 'SUCCESS' | 'CANCEL'
+  status: "SUCCESS" | "CANCEL"
 }
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-  const id = searchParams.get('id') as string
-  const page = searchParams.get('page') as string
-  const limit = searchParams.get('limit') as string
-  const userId = searchParams.get('userId') as string
+  const id = searchParams.get("id") as string
+  const page = searchParams.get("page") as string
+  const limit = searchParams.get("limit") as string
+  const userId = searchParams.get("userId") as string
   if (id) {
     const booking = await prisma.booking.findFirst({
       where: {
@@ -43,7 +43,7 @@ export async function GET(req: Request) {
     })
     const skipPage = parseInt(page) - 1
     const bookings = await prisma.booking.findMany({
-      orderBy: { updatedAt: 'desc' },
+      orderBy: { updatedAt: "desc" },
       where: {
         userId: userId,
       },
@@ -78,7 +78,7 @@ export async function POST(req: Request) {
   }: BookingProps = formData
   if (!session?.user) {
     return NextResponse.json(
-      { error: 'unauthorized user' },
+      { error: "unauthorized user" },
       {
         status: 401,
       },
@@ -93,7 +93,7 @@ export async function POST(req: Request) {
       guestCount: parseInt(guestCount),
       totalAmount: parseInt(totalAmount),
       totalDays: parseInt(totalDays),
-      status: 'SUCCESS',
+      status: "SUCCESS",
     },
   })
   return NextResponse.json(booking, {
@@ -109,7 +109,7 @@ export async function PATCH(req: Request) {
   if (!session?.user) {
     return NextResponse.json(
       {
-        error: 'unauthorized user',
+        error: "unauthorized user",
       },
       {
         status: 401,

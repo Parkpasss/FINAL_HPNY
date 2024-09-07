@@ -1,27 +1,27 @@
 /* eslint-disable @next/next/no-img-element */
-'use client'
+"use client"
 
-import { RoomFeatureProps } from '@/app/rooms/(form)/register/feature/page'
-import { CATEGORY, FeatureFormField, RoomEditField } from '@/constants'
-import { RoomFormType, RoomType } from '@/interface'
-import { storage } from '@/utils/firebaseApp'
+import { RoomFeatureProps } from "@/app/rooms/(form)/register/feature/page"
+import { CATEGORY, FeatureFormField, RoomEditField } from "@/constants"
+import { RoomFormType, RoomType } from "@/interface"
+import { storage } from "@/utils/firebaseApp"
 import {
   deleteObject,
   getDownloadURL,
   ref,
   uploadString,
-} from 'firebase/storage'
-import { useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import AddressSearch from './AddressSearch'
-import { v4 as uuidv4 } from 'uuid'
+} from "firebase/storage"
+import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import AddressSearch from "./AddressSearch"
+import { v4 as uuidv4 } from "uuid"
 
-import cn from 'classnames'
-import { AiFillCamera } from 'react-icons/ai'
-import { useRouter } from 'next/navigation'
-import { toast } from 'react-hot-toast'
-import axios from 'axios'
+import cn from "classnames"
+import { AiFillCamera } from "react-icons/ai"
+import { useRouter } from "next/navigation"
+import { toast } from "react-hot-toast"
+import axios from "axios"
 
 export default function RoomEditForm({ data }: { data: RoomType }) {
   const router = useRouter()
@@ -75,7 +75,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
       const imageRef = ref(storage, `${session?.user.id}/${key}`)
       deleteObject(imageRef)
         .then(() => {
-          console.log('File Deleted: ', key)
+          console.log("File Deleted: ", key)
         })
         .catch((error) => {
           console.error(error)
@@ -88,7 +88,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
     const uploadedImageUrls = []
 
     if (!images) {
-      toast.error('이미지를 한 개 이상 업로드해주세요')
+      toast.error("이미지를 한 개 이상 업로드해주세요")
       return
     }
 
@@ -107,12 +107,12 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
         newImageKeys.push(imageKey)
         try {
           // uploadString으로 firebase에 이미지 업로드하기
-          const data = await uploadString(imageRef, imageFile, 'data_url')
+          const data = await uploadString(imageRef, imageFile, "data_url")
           // downloadURL로 업로드 된 이미지 주소 가져오기
           const imageUrl = await getDownloadURL(data.ref)
           uploadedImageUrls.push(imageUrl)
         } catch (error) {
-          console.error('Error uploading images: ', error)
+          console.error("Error uploading images: ", error)
         }
       }
 
@@ -155,14 +155,14 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
           })
 
           if (result.status === 200) {
-            toast.success('숙소를 수정했습니다.')
-            router.replace('/users/rooms')
+            toast.success("숙소를 수정했습니다.")
+            router.replace("/users/rooms")
           } else {
-            toast.error('다시 시도해주세요')
+            toast.error("다시 시도해주세요")
           }
         } catch (e) {
           console.log(e)
-          toast.error('데이터 수정중 문제가 생겼습니다.')
+          toast.error("데이터 수정중 문제가 생겼습니다.")
         }
       })}
     >
@@ -174,13 +174,13 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
           숙소 이름
         </label>
         <input
-          {...register('title', { required: true, maxLength: 30 })}
+          {...register("title", { required: true, maxLength: 30 })}
           className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black"
         />
-        {errors.title && errors.title.type === 'required' && (
+        {errors.title && errors.title.type === "required" && (
           <span className="text-red-600 text-sm">필수 항목입니다.</span>
         )}
-        {errors.title && errors.title.type === 'maxLength' && (
+        {errors.title && errors.title.type === "maxLength" && (
           <span className="text-red-600 text-sm">
             설명은 30자 이내로 작성해주세요.
           </span>
@@ -191,7 +191,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
           카테고리
         </label>
         <select
-          {...register('category', { required: true })}
+          {...register("category", { required: true })}
           className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black"
         >
           <option value="">카테고리 선택</option>
@@ -201,7 +201,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
             </option>
           ))}
         </select>
-        {errors.category && errors.category.type === 'required' && (
+        {errors.category && errors.category.type === "required" && (
           <span className="text-red-600 text-sm">필수 항목입니다.</span>
         )}
       </div>
@@ -211,10 +211,10 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
         </label>
         <textarea
           rows={3}
-          {...register('desc', { required: true })}
+          {...register("desc", { required: true })}
           className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black resize-none"
         />
-        {errors.desc && errors.desc.type === 'required' && (
+        {errors.desc && errors.desc.type === "required" && (
           <span className="text-red-600 text-sm">필수 항목입니다.</span>
         )}
       </div>
@@ -224,10 +224,10 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
         </label>
         <input
           type="number"
-          {...register('price', { required: true })}
+          {...register("price", { required: true })}
           className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black"
         />
-        {errors.price && errors.price.type === 'required' && (
+        {errors.price && errors.price.type === "required" && (
           <span className="text-red-600 text-sm">필수 항목입니다.</span>
         )}
       </div>
@@ -237,13 +237,13 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
         </label>
         <textarea
           rows={3}
-          {...register('bedroomDesc', { required: true, maxLength: 100 })}
+          {...register("bedroomDesc", { required: true, maxLength: 100 })}
           className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black resize-none"
         />
-        {errors.bedroomDesc && errors.bedroomDesc.type === 'required' && (
+        {errors.bedroomDesc && errors.bedroomDesc.type === "required" && (
           <span className="text-red-600 text-sm">필수 항목입니다.</span>
         )}
-        {errors.bedroomDesc && errors.bedroomDesc.type === 'maxLength' && (
+        {errors.bedroomDesc && errors.bedroomDesc.type === "maxLength" && (
           <span className="text-red-600 text-sm">
             설명은 100자 이내로 작성해주세요.
           </span>
@@ -256,9 +256,9 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
             <label
               key={feature.field}
               className={cn(
-                'border-2 rounded-md hover:bg-black/5 p-3 text-center text-sm',
+                "border-2 rounded-md hover:bg-black/5 p-3 text-center text-sm",
                 {
-                  'border-2 border-black': !!watch(feature?.field),
+                  "border-2 border-black": !!watch(feature?.field),
                 },
               )}
             >
@@ -292,7 +292,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
                     multiple
                     accept="image/*"
                     className="sr-only"
-                    {...register('images', { required: true })}
+                    {...register("images", { required: true })}
                     onChange={handleFileUpload}
                   />
                 </label>
@@ -304,7 +304,7 @@ export default function RoomEditForm({ data }: { data: RoomType }) {
             </div>
           </div>
         </div>
-        {errors?.images && errors?.images?.type === 'required' && (
+        {errors?.images && errors?.images?.type === "required" && (
           <span className="text-red-600 text-sm">필수 항목입니다.</span>
         )}
       </div>

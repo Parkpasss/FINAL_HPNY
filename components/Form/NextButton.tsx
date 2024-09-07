@@ -1,13 +1,13 @@
 export default function NextButton({
-  text = '다음',
+  text = "다음",
   onClick,
   disabled = false,
-  type = 'button',
+  type = "button",
 }: {
   text?: string
   onClick?: () => void
   disabled?: boolean
-  type?: 'button' | 'submit'
+  type?: "button" | "submit"
 }) {
   return (
     <button

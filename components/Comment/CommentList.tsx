@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react'
-import { BiChevronRight } from 'react-icons/bi'
-import CommentListModal from './CommentListModal'
-import { CommentApiType } from '@/interface'
-import { Loader } from '../Loader'
+import { useState } from "react"
+import { BiChevronRight } from "react-icons/bi"
+import CommentListModal from "./CommentListModal"
+import { CommentApiType } from "@/interface"
+import { Loader } from "../Loader"
 
-import dayjs from 'dayjs'
-import 'dayjs/locale/ko'
+import dayjs from "dayjs"
+import "dayjs/locale/ko"
 
 export default function CommentList({
   isLoading,
@@ -35,14 +35,14 @@ export default function CommentList({
         후기 {comments?.totalCount}개
       </h1>
       <div className="mt-8 grid md:grid-cols-2 gap-12">
-      {isLoading ? (
+        {isLoading ? (
           <Loader className="md:col-span-2" />
         ) : (
           comments?.data?.map((comment) => (
             <div key={comment?.id} className="flex flex-col gap-2">
               <div className="flex gap-2 items-center">
                 <img
-                  src={comment?.user?.image || '/images/user-icon.png'}
+                  src={comment?.user?.image || "/images/user-icon.png"}
                   alt="profile img"
                   width={50}
                   height={50}
@@ -50,14 +50,14 @@ export default function CommentList({
                 />
                 <div>
                   <h1 className="font-semibold">
-                    {comment?.user?.name || '-'}
+                    {comment?.user?.name || "-"}
                   </h1>
                   <div className="text-gray-500 text-xs">
-                  {dayjs(comment?.createdAt)?.format('YYYY-MM-DD HH:MM:ss')}
+                    {dayjs(comment?.createdAt)?.format("YYYY-MM-DD HH:MM:ss")}
                   </div>
+                </div>
               </div>
-            </div>
-            <div className="max-w-md text-gray-600">{comment?.body}</div>
+              <div className="max-w-md text-gray-600">{comment?.body}</div>
               <button
                 type="button"
                 onClick={openModal}
@@ -65,9 +65,9 @@ export default function CommentList({
               >
                 더보기 <BiChevronRight className="text-xl" />
               </button>
-              </div>
-        ))
-      )}
+            </div>
+          ))
+        )}
       </div>
       <div className="mt-8 mb-20">
         <button

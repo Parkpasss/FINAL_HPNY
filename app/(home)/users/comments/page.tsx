@@ -1,19 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
-'use client'
+"use client"
 
-import { Loader } from '@/components/Loader'
-import useIntersectionObserver from '@/hooks/useIntersectionObserver'
-import { CommentType } from '@/interface'
-import axios from 'axios'
-import { useSession } from 'next-auth/react'
-import React, { useEffect } from 'react'
-import { useRef } from 'react'
-import { useInfiniteQuery } from 'react-query'
-import { useRouter } from 'next/navigation'
+import { Loader } from "@/components/Loader"
+import useIntersectionObserver from "@/hooks/useIntersectionObserver"
+import { CommentType } from "@/interface"
+import axios from "axios"
+import { useSession } from "next-auth/react"
+import React, { useEffect } from "react"
+import { useRef } from "react"
+import { useInfiniteQuery } from "react-query"
+import { useRouter } from "next/navigation"
 
-import dayjs from 'dayjs'
-import 'dayjs/locale/ko'
-import { BiChevronRight } from 'react-icons/bi'
+import dayjs from "dayjs"
+import "dayjs/locale/ko"
+import { BiChevronRight } from "react-icons/bi"
 
 export default function UserComment() {
   const router = useRouter()
@@ -72,7 +72,7 @@ export default function UserComment() {
               <div key={comment?.id} className="flex flex-col gap-2">
                 <div className="flex gap-2 items-center">
                   <img
-                    src={comment?.user?.image || '/images/user.png'}
+                    src={comment?.user?.image || "/images/user.png"}
                     alt="profile img"
                     width={50}
                     height={50}
@@ -80,10 +80,10 @@ export default function UserComment() {
                   />
                   <div>
                     <h1 className="font-semibold">
-                      {comment?.user?.name || '-'}
+                      {comment?.user?.name || "-"}
                     </h1>
                     <div className="text-gray-500 text-xs">
-                      {dayjs(comment?.createdAt).format('YYYY-MM-DD HH:MM:ss')}
+                      {dayjs(comment?.createdAt).format("YYYY-MM-DD HH:MM:ss")}
                     </div>
                   </div>
                 </div>

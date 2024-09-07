@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { BookingType } from '@/interface'
-import Modal from '../Modal'
-import axios from 'axios'
-import { toast } from 'react-hot-toast'
+import { useState } from "react"
+import { BookingType } from "@/interface"
+import Modal from "../Modal"
+import axios from "axios"
+import { toast } from "react-hot-toast"
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js"
 
 interface RefundProps {
@@ -25,29 +25,34 @@ export default function RefundButton({ booking, canRefund }: RefundProps) {
   }
 
   const handleRefund = async () => {
-    const res = await axios.patch('/api/bookings', {
+    const res = await axios.patch("/api/bookings", {
       id: booking.id,
-      status: 'CANCEL',
+      status: "CANCEL",
     })
 
     if (res.status === 200) {
-      toast.success('해당 예약을 취소했습니다.')
+      toast.success("해당 예약을 취소했습니다.")
       setIsRefund(true)
       closeModal()
     } else {
-      toast.error('다시 시도해주세요.')
+      toast.error("다시 시도해주세요.")
     }
   }
 
   return (
     <>
-    <PayPalScriptProvider options={{ clientId:"AQQMOvSjXVQpbgMabqrY5aXp3roWjXgZDCb6JUv0i3olvzWdXAmGShcsug4fJXTVIO-BxRkwsOxV6TAc" }}>
-      <div className='justify-center'>
-        <PayPalButtons/>
+      <PayPalScriptProvider
+        options={{
+          clientId:
+            "AQQMOvSjXVQpbgMabqrY5aXp3roWjXgZDCb6JUv0i3olvzWdXAmGShcsug4fJXTVIO-BxRkwsOxV6TAc",
+        }}
+      >
+        <div className="justify-center">
+          <PayPalButtons />
         </div>
       </PayPalScriptProvider>
       <section className="flex flex-col gap-4">
-        {booking?.status === 'CANCEL' || isRefund ? (
+        {booking?.status === "CANCEL" || isRefund ? (
           <button
             className="bg-lime-600 hover:bg-lime-500 text-white rounded-md disabled:bg-gray-300 px-5 py-2.5"
             disabled

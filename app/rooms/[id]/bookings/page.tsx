@@ -1,9 +1,8 @@
-
-import SubmitButton from '@/components/Booking/SubmitButton'
-import { BLUR_DATA_URL } from '@/constants'
-import { BookingParamsProps, RoomType } from '@/interface'
-import Image from 'next/image'
-import Link from 'next/link'
+import SubmitButton from "@/components/Booking/SubmitButton"
+import { BLUR_DATA_URL } from "@/constants"
+import { BookingParamsProps, RoomType } from "@/interface"
+import Image from "next/image"
+import Link from "next/link"
 
 export default async function BookingPage({
   params,
@@ -42,7 +41,7 @@ export default async function BookingPage({
 
             <div className="flex border-b gap-4 pb-6">
               <Image
-                src={data?.images?.[0] || '/images/logo.png'}
+                src={data?.images?.[0] || "/images/logo.png"}
                 width={100}
                 height={100}
                 alt="숙소 이미지"
@@ -69,7 +68,7 @@ export default async function BookingPage({
             <div>
               <h3>총 합계</h3>
               <div className="text-sm mt-1 text-gray-800">
-              {parseInt(totalAmount)?.toLocaleString()}원
+                {parseInt(totalAmount)?.toLocaleString()}원
               </div>
             </div>
             <SubmitButton />
@@ -85,12 +84,12 @@ async function getData(id: string) {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/rooms?id=${id}`,
       {
-        cache: 'no-store',
+        cache: "no-store",
       },
     )
 
     if (!res.ok) {
-      throw new Error('Failed to fetch data')
+      throw new Error("Failed to fetch data")
     }
 
     return res.json()

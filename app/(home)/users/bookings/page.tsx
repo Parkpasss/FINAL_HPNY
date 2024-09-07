@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import { Loader } from '@/components/Loader'
-import { BookingType } from '@/interface'
-import axios from 'axios'
-import dayjs from 'dayjs'
-import { useSession } from 'next-auth/react'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import React from 'react'
-import { BiChevronRight } from 'react-icons/bi'
-import { useInfiniteQuery } from 'react-query'
+import { Loader } from "@/components/Loader"
+import { BookingType } from "@/interface"
+import axios from "axios"
+import dayjs from "dayjs"
+import { useSession } from "next-auth/react"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import React from "react"
+import { BiChevronRight } from "react-icons/bi"
+import { useInfiniteQuery } from "react-query"
 
 export default function BookingsPage() {
   const { data: session } = useSession()
@@ -54,15 +54,15 @@ export default function BookingsPage() {
                   className="flex flex-col gap-6 border-b pb-8 hover:bg-black/5 cursor-pointer p-6"
                 >
                   <h1 className="font-semibold text-lg md:text-xl">
-                    {booking?.status === 'SUCCESS'
-                      ? '예약된 여행'
-                      : '취소된 여행'}
+                    {booking?.status === "SUCCESS"
+                      ? "예약된 여행"
+                      : "취소된 여행"}
                   </h1>
                   <div className="flex gap-4 items-center w-full justify-between">
                     <div className="flex items-center gap-4">
                       <Image
                         className="rounded-md"
-                        src={booking?.room?.images?.[0] || '/images/logo.png'}
+                        src={booking?.room?.images?.[0] || "/images/logo.png"}
                         width={80}
                         height={80}
                         alt="숙소 이미지"
@@ -75,10 +75,10 @@ export default function BookingsPage() {
                           {booking?.room?.address}
                         </p>
                         <p className="mt-1 text-xs text-gray-500">
-                          {dayjs(booking?.checkIn)?.format('YYYY년 MM월 DD일')}{' '}
-                          -{' '}
-                          {dayjs(booking?.checkOut)?.format('YYYY년 MM월 DD일')}{' '}
-                          | {booking?.guestCount}명 |{' '}
+                          {dayjs(booking?.checkIn)?.format("YYYY년 MM월 DD일")}{" "}
+                          -{" "}
+                          {dayjs(booking?.checkOut)?.format("YYYY년 MM월 DD일")}{" "}
+                          | {booking?.guestCount}명 |{" "}
                           {booking?.totalAmount?.toLocaleString()}원
                         </p>
                       </div>

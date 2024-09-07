@@ -1,16 +1,16 @@
-'use client'
-import React, { useEffect, useRef } from 'react'
+"use client"
+import React, { useEffect, useRef } from "react"
 
-import CategoryList from '@/components/CategoryList'
-import { GridLayout, RoomItem } from '@/components/RoomList'
-import { useInfiniteQuery } from 'react-query'
+import CategoryList from "@/components/CategoryList"
+import { GridLayout, RoomItem } from "@/components/RoomList"
+import { useInfiniteQuery } from "react-query"
 
-import axios from 'axios'
+import axios from "axios"
 
-import { LikeType, RoomType } from '@/interface'
-import { Loader, LoaderGrid } from '@/components/Loader'
-import useIntersectionObserver from '@/hooks/useIntersectionObserver'
-import { useSession } from 'next-auth/react'
+import { LikeType, RoomType } from "@/interface"
+import { Loader, LoaderGrid } from "@/components/Loader"
+import useIntersectionObserver from "@/hooks/useIntersectionObserver"
+import { useSession } from "next-auth/react"
 
 export default function UserLikes() {
   const ref = useRef<HTMLDivElement | null>(null)
@@ -19,7 +19,7 @@ export default function UserLikes() {
   const { data: session } = useSession()
 
   const fetchLikes = async ({ pageParam = 1 }) => {
-    const { data } = await axios('/api/likes?page=' + pageParam, {
+    const { data } = await axios("/api/likes?page=" + pageParam, {
       params: {
         limit: 12,
         page: pageParam,
@@ -43,7 +43,7 @@ export default function UserLikes() {
   })
 
   if (isError) {
-    throw new Error('Like API Fetching Error')
+    throw new Error("Like API Fetching Error")
   }
 
   useEffect(() => {

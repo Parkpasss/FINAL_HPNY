@@ -146,7 +146,7 @@
 }
 
 .react-calendar__tile--now:hover {
-  color:black !important;
+  color: black !important;
 }
 
 .react-calendar__tile--now:enabled:hover,
@@ -195,7 +195,7 @@
 .react-calendar__tile:disabled:hover {
   border: none;
   background-color: transparent;
-  color:black;
+  color: black;
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {
@@ -222,4 +222,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-

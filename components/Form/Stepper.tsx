@@ -1,8 +1,8 @@
-import cn from 'classnames'
+import cn from "classnames"
 
-export default function Stepper({ count = 1, className = '' }) {
+export default function Stepper({ count = 1, className = "" }) {
   return (
-    <div className={cn('grid grid-cols-5 gap-3 h-1', className)}>
+    <div className={cn("grid grid-cols-5 gap-3 h-1", className)}>
       {/* 검정 스텝 */}
       {[...Array(count)]?.map((_, i) => (
         <div key={`active-${i}`} className="bg-black w-full rounded-md" />

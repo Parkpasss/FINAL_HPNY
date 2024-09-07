@@ -1,16 +1,16 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
 
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
-import prisma from '@/db'
+import prisma from "@/db"
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-  const roomId = searchParams.get('roomId') as string
-  const limit = searchParams.get('limit') as string
-  const page = searchParams.get('page') as string
-  const my = searchParams.get('my') as string
+  const roomId = searchParams.get("roomId") as string
+  const limit = searchParams.get("limit") as string
+  const page = searchParams.get("page") as string
+  const my = searchParams.get("my") as string
 
   const session = await getServerSession(authOptions)
   // page 값이 있는 경우, 댓글 모달 리스트 무한 스크롤
@@ -24,7 +24,7 @@ export async function GET(req: Request) {
     })
     const skipPage = parseInt(page) - 1
     const comments = await prisma.comment.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
       where: {
         roomId: roomId ? parseInt(roomId) : {},
         userId: my ? session?.user?.id : {},
@@ -52,7 +52,7 @@ export async function GET(req: Request) {
     })
 
     const comments = await prisma.comment.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
       take: parseInt(limit),
       where: {
         roomId: roomId ? parseInt(roomId) : {},
@@ -84,7 +84,7 @@ export async function POST(req: Request) {
   if (!session?.user) {
     return NextResponse.json(
       {
-        error: 'Unauthorized user',
+        error: "Unauthorized user",
       },
       {
         status: 401,

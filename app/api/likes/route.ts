@@ -1,21 +1,21 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
 
-import { getServerSession } from 'next-auth'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { getServerSession } from "next-auth"
+import { authOptions } from "../auth/[...nextauth]/route"
 
-import prisma from '@/db'
+import prisma from "@/db"
 
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions)
   const { searchParams } = new URL(req.url)
-  const page = searchParams.get('page') as string
-  const limit = searchParams.get('limit') as string
+  const page = searchParams.get("page") as string
+  const limit = searchParams.get("limit") as string
   const skipPage = parseInt(page) - 1
 
   if (!session?.user) {
     return NextResponse.json(
       {
-        error: 'unauthorized user',
+        error: "unauthorized user",
       },
       { status: 401 },
     )
@@ -28,7 +28,7 @@ export async function GET(req: Request) {
   })
 
   const likes = await prisma.like.findMany({
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
     where: {
       userId: session?.user.id,
     },
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
   if (!session?.user) {
     return NextResponse.json(
       {
-        error: 'unauthorized user',
+        error: "unauthorized user",
       },
       { status: 401 },
     )

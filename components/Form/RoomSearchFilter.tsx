@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { useSetRecoilState } from 'recoil'
-import { searchState } from '@/atom'
-import { AiOutlineSearch } from 'react-icons/ai'
+import { useSetRecoilState } from "recoil"
+import { searchState } from "@/atom"
+import { AiOutlineSearch } from "react-icons/ai"
 
 export default function RoomSearchFilter() {
   const setQ = useSetRecoilState(searchState)

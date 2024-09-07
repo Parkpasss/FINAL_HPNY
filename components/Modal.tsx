@@ -1,6 +1,6 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, ReactNode } from 'react'
-import { AiOutlineClose } from 'react-icons/ai'
+import { Dialog, Transition } from "@headlessui/react"
+import { Fragment, ReactNode } from "react"
+import { AiOutlineClose } from "react-icons/ai"
 
 interface ModalProps {
   isOpen: boolean

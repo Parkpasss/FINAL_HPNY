@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
 /* eslint-disable @next/next/no-img-element */
-import { Dialog, Transition } from '@headlessui/react'
-import React, { Fragment, useEffect, useRef } from 'react'
-import { AiOutlineClose } from 'react-icons/ai'
-import axios from 'axios'
-import { useInfiniteQuery } from 'react-query'
-import { CommentApiType, CommentType } from '@/interface'
-import useIntersectionObserver from '@/hooks/useIntersectionObserver'
-import { Loader } from '../Loader'
+import { Dialog, Transition } from "@headlessui/react"
+import React, { Fragment, useEffect, useRef } from "react"
+import { AiOutlineClose } from "react-icons/ai"
+import axios from "axios"
+import { useInfiniteQuery } from "react-query"
+import { CommentApiType, CommentType } from "@/interface"
+import useIntersectionObserver from "@/hooks/useIntersectionObserver"
+import { Loader } from "../Loader"
 
-import dayjs from 'dayjs'
-import 'dayjs/locale/ko'
+import dayjs from "dayjs"
+import "dayjs/locale/ko"
 
 export default function CommentListModal({
   isOpen,
@@ -24,7 +24,7 @@ export default function CommentListModal({
 }) {
   const ref = useRef<HTMLDivElement | null>(null)
   const pageRef = useIntersectionObserver(ref, {
-    rootMargin: '10%',
+    rootMargin: "10%",
     enableObserver: !!ref.current,
   })
   const isPageEnd = !!pageRef?.isIntersecting
@@ -100,7 +100,7 @@ export default function CommentListModal({
                     후기 전체 보기
                   </Dialog.Title>
                   <div className="mt-8 flex flex-col gap-8 mx-auto max-w-lg mb-10">
-                  {comments?.pages?.map((page, index) => (
+                    {comments?.pages?.map((page, index) => (
                       <React.Fragment key={index}>
                         {page.data.map((comment: CommentType) => (
                           <div
@@ -109,10 +109,7 @@ export default function CommentListModal({
                           >
                             <div className="flex gap-2 items-center">
                               <img
-                                src={
-                                  comment?.user?.image ||
-                                  '/images/user.png'
-                                }
+                                src={comment?.user?.image || "/images/user.png"}
                                 alt="profile img"
                                 width={50}
                                 height={50}
@@ -120,12 +117,11 @@ export default function CommentListModal({
                               />
                               <div>
                                 <h1 className="font-semibold">
-                                  {comment?.user?.name || '-'}
+                                  {comment?.user?.name || "-"}
                                 </h1>
                                 <div className="text-gray-500 text-xs">
-                                  
-                                {dayjs(comment?.createdAt)?.format(
-                                    'YYYY-MM-DD HH:MM:ss',
+                                  {dayjs(comment?.createdAt)?.format(
+                                    "YYYY-MM-DD HH:MM:ss",
                                   )}
                                 </div>
                               </div>
@@ -134,8 +130,8 @@ export default function CommentListModal({
                               {comment?.body}
                             </div>
                           </div>
-                          ))}
-                          </React.Fragment>
+                        ))}
+                      </React.Fragment>
                     ))}
                     {(hasNextPage || isFetching) && <Loader className="mt-8" />}
                     <div

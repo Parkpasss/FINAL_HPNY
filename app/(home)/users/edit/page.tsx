@@ -1,29 +1,29 @@
-'use client'
+"use client"
 
-import React, { useState, useEffect } from 'react'
-import { UserType } from '@/interface'
-import axios from 'axios'
-import { useSession } from 'next-auth/react'
-import { useQuery } from 'react-query'
-import { FullPageLoader } from '@/components/Loader'
-import toast from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
+import React, { useState, useEffect } from "react"
+import { UserType } from "@/interface"
+import axios from "axios"
+import { useSession } from "next-auth/react"
+import { useQuery } from "react-query"
+import { FullPageLoader } from "@/components/Loader"
+import toast from "react-hot-toast"
+import { useRouter } from "next/navigation"
 
 export default function UserEditPage() {
   const router = useRouter()
   const { status } = useSession()
-  const [name, setName] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
-  const [phone, setPhone] = useState<string>('')
-  const [address, setAddress] = useState<string>('')
+  const [name, setName] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
+  const [phone, setPhone] = useState<string>("")
+  const [address, setAddress] = useState<string>("")
 
   const fetchUser = async () => {
-    const { data } = await axios('/api/users')
+    const { data } = await axios("/api/users")
     return data as UserType
   }
 
-  const { data: user, isSuccess } = useQuery('user-form', fetchUser, {
-    enabled: status === 'authenticated',
+  const { data: user, isSuccess } = useQuery("user-form", fetchUser, {
+    enabled: status === "authenticated",
     refetchOnMount: false,
   })
 
@@ -32,41 +32,41 @@ export default function UserEditPage() {
       target: { name, value },
     } = e
 
-    if (name === 'name') {
+    if (name === "name") {
       setName(value)
     }
-    if (name === 'email') {
+    if (name === "email") {
       setEmail(value)
     }
-    if (name === 'phone') {
+    if (name === "phone") {
       setPhone(value)
     }
-    if (name === 'address') {
+    if (name === "address") {
       setAddress(value)
     }
   }
 
   const updateUser = async () => {
-    const res = await axios.put('/api/users', {
+    const res = await axios.put("/api/users", {
       name: name,
       email: email,
       phone: phone,
       address: address,
     })
     if (res.status === 200) {
-      toast.success('정보를 수정했습니다')
-      router.replace('/users/info')
+      toast.success("정보를 수정했습니다")
+      router.replace("/users/info")
     } else {
-      toast.error('다시 시도해주세요')
+      toast.error("다시 시도해주세요")
     }
   }
 
   useEffect(() => {
     if (user && isSuccess) {
-      setName(user?.name || '')
-      setEmail(user?.email || '')
-      setAddress(user?.address || '')
-      setPhone(user?.phone || '')
+      setName(user?.name || "")
+      setEmail(user?.email || "")
+      setAddress(user?.address || "")
+      setPhone(user?.phone || "")
     }
   }, [user, isSuccess])
 

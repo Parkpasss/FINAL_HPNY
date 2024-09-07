@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import axios from 'axios'
-import { useSession } from 'next-auth/react'
-import { useSearchParams } from 'next/navigation'
-import { useParams } from 'next/navigation'
-import { useRouter } from 'next/navigation'
-import { toast } from 'react-hot-toast'
+import axios from "axios"
+import { useSession } from "next-auth/react"
+import { useSearchParams } from "next/navigation"
+import { useParams } from "next/navigation"
+import { useRouter } from "next/navigation"
+import { toast } from "react-hot-toast"
 
 export default function SubmitButton() {
   const { status } = useSession()
@@ -14,14 +14,14 @@ export default function SubmitButton() {
   const router = useRouter()
 
   const id = params?.id
-  const checkIn = searchParams.get('checkIn')
-  const checkOut = searchParams.get('checkOut')
-  const guestCount = searchParams.get('guestCount')
-  const totalAmount = searchParams.get('totalAmount')
-  const totalDays = searchParams.get('totalDays')
+  const checkIn = searchParams.get("checkIn")
+  const checkOut = searchParams.get("checkOut")
+  const guestCount = searchParams.get("guestCount")
+  const totalAmount = searchParams.get("totalAmount")
+  const totalDays = searchParams.get("totalDays")
 
   const handleSubmit = async () => {
-    const res = await axios.post('/api/bookings', {
+    const res = await axios.post("/api/bookings", {
       roomId: id,
       checkIn: checkIn,
       checkOut: checkOut,
@@ -31,10 +31,10 @@ export default function SubmitButton() {
     })
 
     if (res.status === 200) {
-      toast.success('예약을 완료했습니다.')
+      toast.success("예약을 완료했습니다.")
       router.replace(`/users/bookings/${res.data.id}`)
     } else {
-      toast.error('다시 시도해주세요.')
+      toast.error("다시 시도해주세요.")
     }
   }
 
@@ -42,7 +42,7 @@ export default function SubmitButton() {
     <div>
       <button
         type="button"
-        disabled={status === 'unauthenticated'}
+        disabled={status === "unauthenticated"}
         onClick={handleSubmit}
         className="bg-lime-600 hover:bg-lime-500 px-6 py-3 text-white rounded-md w-full disabled:bg-gray-300"
       >

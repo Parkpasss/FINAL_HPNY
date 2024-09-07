@@ -1,54 +1,53 @@
-import { PrismaClient } from '@prisma/client'
-import { fakerKO as faker} from '@faker-js/faker'
+import { PrismaClient } from "@prisma/client"
+import { fakerKO as faker } from "@faker-js/faker"
 
 const prisma = new PrismaClient()
 export const CATEGORY = [
-  '전망좋은',
-  '자연',
-  '동굴',
-  '캠핑장',
-  '방',
-  '한옥',
-  '해변',
-  '국립공원',
-  '인기',
-  '수영장',
-  '농장',
-  '통나무집',
-  '디자인',
-  '스키',
-  '호수',
-  '키즈',
-  '저택',
-  '신규',
-  '섬',
-  '주택',
-  '서핑',
-  '골프장',
+  "전망좋은",
+  "자연",
+  "동굴",
+  "캠핑장",
+  "방",
+  "한옥",
+  "해변",
+  "국립공원",
+  "인기",
+  "수영장",
+  "농장",
+  "통나무집",
+  "디자인",
+  "스키",
+  "호수",
+  "키즈",
+  "저택",
+  "신규",
+  "섬",
+  "주택",
+  "서핑",
+  "골프장",
 ]
 
+async function seedUsers() {
+  Array.from({ length: 10 }, (v, i) => i).forEach(async () => {
+    const userData = {
+      email: faker.internet.email(),
+      name: faker.person.lastName() + faker.person.firstName(),
+      image: faker.image.avatar(),
+      desc: faker.lorem.paragraph(),
+    }
 
-async function seedUsers() { 
-    Array.from({ length: 10 }, (v, i) => i).forEach(async () => {
-      const userData = {
-        email: faker.internet.email(),
-        name: faker.person.lastName() + faker.person.firstName(),
-        image: faker.image.avatar(),
-        desc: faker.lorem.paragraph(),
-      }
-
-      const res = await prisma.user.create({
-        data: userData,
-      })
-
-      console.log(res)
+    const res = await prisma.user.create({
+      data: userData,
     })
+
+    console.log(res)
+  })
 }
 
 async function seedRooms() {
   const totalUsers = await prisma.user.findMany()
   if (totalUsers?.length > 1) {
-    Array.from({ length: 100}, (v, i) => i).forEach(async () => {
+    Array.from({ length: 100 }, (v, i) => i).forEach(async () => {
       const randomUserIndex = Math.floor(Math.random() * totalUsers.length)
       const randomUser = totalUsers[randomUserIndex]
 
@@ -56,37 +55,40 @@ async function seedRooms() {
         title: faker.lorem.words(),
         images: [
           faker.image.urlLoremFlickr({
-            category: 'hotel',
-            width:500,
+            category: "hotel",
+            width: 500,
             height: 500,
           }),
           faker.image.urlLoremFlickr({
-            category: 'travel',
-            width:500,
+            category: "travel",
+            width: 500,
             height: 500,
           }),
           faker.image.urlLoremFlickr({
-            category: 'nature',
-            width:500,
+            category: "nature",
+            width: 500,
             height: 500,
           }),
           faker.image.urlLoremFlickr({
-            category: 'building',
-            width:500,
+            category: "building",
+            width: 500,
             height: 500,
           }),
         ],
         lat: getRandomLatitude(),
         lng: getRandomLongtitude(),
-        address: faker.location.state() + faker.location.street() + faker.location.streetAddress({
-          useFullAddress: true,
-        }),
+        address:
+          faker.location.state() +
+          faker.location.street() +
+          faker.location.streetAddress({
+            useFullAddress: true,
+          }),
         desc: faker.lorem.paragraphs(),
         category: CATEGORY[Math.floor(Math.random() * CATEGORY.length)],
         bedroomDesc: faker.lorem.words(),
         price: parseInt(
-          faker.commerce.price({min: 50000, max: 500000, dec: 0 }),
-      ),
+          faker.commerce.price({ min: 50000, max: 500000, dec: 0 }),
+        ),
         freeCancel: faker.datatype.boolean(),
         selfCheckIn: faker.datatype.boolean(),
         officeSpace: faker.datatype.boolean(),
@@ -105,7 +107,7 @@ async function seedRooms() {
       })
 
       console.log(res)
-    }) 
+    })
   }
 }
 
@@ -136,8 +138,8 @@ function getRandomLongtitude() {
     ?.toString()
 }
 
-async function seedFaqs(){
-  Array.from({ length:10 }, (v, i) => i).forEach(async () => {
+async function seedFaqs() {
+  Array.from({ length: 10 }, (v, i) => i).forEach(async () => {
     const faqData = {
       title: faker.lorem.words(),
       desc: faker.lorem.paragraph(),
@@ -152,7 +154,7 @@ async function seedFaqs(){
 }
 
 async function main() {
-  // await seedUsers() 
+  // await seedUsers()
   await seedRooms()
   // await seedFaqs()
 }

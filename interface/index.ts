@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 
-export type DetailFilterType = 'location' | 'checkIn' | 'checkOut' | 'guest'
+export type DetailFilterType = "location" | "checkIn" | "checkOut" | "guest"
 export interface FilterProps {
   location: string
   checkIn: string
@@ -44,7 +44,7 @@ export interface CommentApiType {
   data: CommentType[]
   page?: number
   totalPage?: number
-} 
+}
 
 export interface RoomType {
   id: number
@@ -92,7 +92,7 @@ export interface UserType {
   accounts: Account[]
   address?: string
   phone?: string
-  comments?: Comment []
+  comments?: Comment[]
   bookings?: BookingType[]
 }
 
@@ -132,7 +132,7 @@ export interface BookingType {
   guestCount: number
   totalAmount: number
   totalDays: number
-  status: 'SUCCESS' | 'CANCEL'
+  status: "SUCCESS" | "CANCEL"
   room: RoomType
   user: UserType
   createAt: string

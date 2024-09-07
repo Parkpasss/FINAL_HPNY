@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { useQuery } from 'react-query'
+import { useQuery } from "react-query"
 
-import { RoomType } from '@/interface'
-import CommentForm from './CommentForm'
-import CommentList from './CommentList'
+import { RoomType } from "@/interface"
+import CommentForm from "./CommentForm"
+import CommentList from "./CommentList"
 
-import axios from 'axios'
+import axios from "axios"
 
 export default function Comment({ room }: { room: RoomType }) {
   const fetchComments = async () => {
@@ -21,7 +21,6 @@ export default function Comment({ room }: { room: RoomType }) {
   } = useQuery(`room-${room.id}-comment`, fetchComments, {
     enabled: !!room.id,
   })
-
 
   return (
     <div className="border-b border-gray-300 py-8 px-4">

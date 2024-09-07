@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import { Loader } from '@/components/Loader'
-import useIntersectionObserver from '@/hooks/useIntersectionObserver'
-import { RoomType } from '@/interface'
-import { storage } from '@/utils/firebaseApp'
-import axios from 'axios'
-import dayjs from 'dayjs'
-import { deleteObject, ref, getDownloadURL } from 'firebase/storage'
-import { useSession } from 'next-auth/react'
-import Link from 'next/link'
-import React, { useEffect, useRef } from 'react'
-import toast from 'react-hot-toast'
-import { useInfiniteQuery } from 'react-query'
-import { useRecoilValue } from 'recoil'
-import { searchState } from '@/atom'
-import RoomSearchFilter from '@/components/Form/RoomSearchFilter'
+import { Loader } from "@/components/Loader"
+import useIntersectionObserver from "@/hooks/useIntersectionObserver"
+import { RoomType } from "@/interface"
+import { storage } from "@/utils/firebaseApp"
+import axios from "axios"
+import dayjs from "dayjs"
+import { deleteObject, ref, getDownloadURL } from "firebase/storage"
+import { useSession } from "next-auth/react"
+import Link from "next/link"
+import React, { useEffect, useRef } from "react"
+import toast from "react-hot-toast"
+import { useInfiniteQuery } from "react-query"
+import { useRecoilValue } from "recoil"
+import { searchState } from "@/atom"
+import RoomSearchFilter from "@/components/Form/RoomSearchFilter"
 
 export default function UserRooms() {
   const observerRef = useRef<HTMLDivElement | null>(null)
@@ -28,7 +28,7 @@ export default function UserRooms() {
   }
 
   const fetchMyRooms = async ({ pageParam = 1 }) => {
-    const { data } = await axios('/api/rooms?my=true&page=' + pageParam, {
+    const { data } = await axios("/api/rooms?my=true&page=" + pageParam, {
       params: {
         limit: 12,
         page: pageParam,
@@ -56,14 +56,13 @@ export default function UserRooms() {
     },
   )
 
-
   async function deleteImages(imageKeys: string[] | null) {
     if (imageKeys) {
       imageKeys.forEach((key) => {
         const imageRef = ref(storage, `${session?.user.id}/${key}`)
         deleteObject(imageRef)
           .then(() => {
-            console.log('File Deleted: ', key)
+            console.log("File Deleted: ", key)
           })
           .catch((error) => {
             console.log(error)
@@ -74,7 +73,7 @@ export default function UserRooms() {
   }
 
   const handleDelete = async (data: RoomType) => {
-    const confirm = window.confirm('해당 숙소를 삭제하시겠습니까?')
+    const confirm = window.confirm("해당 숙소를 삭제하시겠습니까?")
 
     if (confirm && data) {
       try {
@@ -83,14 +82,14 @@ export default function UserRooms() {
         const result = await axios.delete(`/api/rooms?id=${data.id}`)
 
         if (result.status === 200) {
-          toast.success('숙소를 삭제했습니다.')
+          toast.success("숙소를 삭제했습니다.")
           refetch()
         } else {
-          toast.error('데이터 삭제중 문제가 생겼습니다.')
+          toast.error("데이터 삭제중 문제가 생겼습니다.")
         }
       } catch (e) {
         console.log(e)
-        toast.error('다시 시도해주세요')
+        toast.error("다시 시도해주세요")
       }
     }
   }
@@ -106,7 +105,7 @@ export default function UserRooms() {
   }, [fetchNextPage, hasNextPage, isPageEnd])
 
   if (!!isError) {
-    throw new Error('room API fetching error')
+    throw new Error("room API fetching error")
   }
 
   return (
@@ -159,10 +158,10 @@ export default function UserRooms() {
                     {room.price?.toLocaleString()} 원
                   </td>
                   <td className="px-6 py-4">
-                    {dayjs(room.createdAt).format('YYYY-MM-DD HH:MM:ss')}
+                    {dayjs(room.createdAt).format("YYYY-MM-DD HH:MM:ss")}
                   </td>
                   <td className="px-6 py-4">
-                    {dayjs(room.updatedAt).format('YYYY-MM-DD HH:MM:ss')}
+                    {dayjs(room.updatedAt).format("YYYY-MM-DD HH:MM:ss")}
                   </td>
                   <td className="px-6 py-4 min-w-[80px]">
                     <Link

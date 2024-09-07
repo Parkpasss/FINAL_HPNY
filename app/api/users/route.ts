@@ -3,13 +3,14 @@ import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
-import prisma from '@/db'
+import prisma from "@/db"
 
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user) {
-    return NextResponse.json({ error: 'Unauthorized user'},
+    return NextResponse.json(
+      { error: "Unauthorized user" },
       {
         status: 401,
       },
@@ -36,20 +37,21 @@ export async function PUT(req: Request) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user) {
-    return NextResponse.json({
-      error: 'Unauthorized user',
-    },
-  {
-    status: 401,
-  },
-)
+    return NextResponse.json(
+      {
+        error: "Unauthorized user",
+      },
+      {
+        status: 401,
+      },
+    )
   }
 
   const result = await prisma.user.update({
     where: {
       id: session?.user?.id,
     },
-    data: {...formData},
+    data: { ...formData },
   })
 
   return NextResponse.json(result, {
