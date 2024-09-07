@@ -1,0 +1,176 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? @db.Text
+  refresh_token_expires_in    Int?
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verificationtokens")
+}
+
+model User {
+  id            String      @id @default(uuid())
+  email         String?     @unique
+  name          String?
+  image         String?
+  desc          String?
+  emailVerified Boolean?
+  phone         String?
+  address       String?
+  rooms         Room[]
+  accounts      Account[]
+  sessions      Session[]
+  likes         Like[]
+  comments      Comment[]
+  bookings      Booking[]
+
+  Activity Activity[]
+}
+
+model Comment {
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  body          String
+  roomId        Int
+  userId        String
+  room          Room        @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId, roomId])
+  Activity Activity[]
+}
+
+model Like {
+  id              Int        @id @default(autoincrement())
+  createdAt       DateTime   @default(now())
+  userId          String
+  roomId          Int
+  room            Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  Activity Activity[]
+}
+
+model Room {
+  id                  Int         @id @default(autoincrement())
+  title               String
+  images              String[]
+  imageKeys           String[]
+  address             String
+  lat                 String
+  lng                 String
+  category            String
+  desc                String
+  price               Int
+  bedroomDesc         String?
+  freeCancel          Boolean     @default(false)
+  selfCheckIn         Boolean    @default(false)
+  officeSpace         Boolean    @default(false)
+  hasMountainView     Boolean    @default(false)
+  hasShampoo          Boolean    @default(false)
+  hasFreeLaundry      Boolean    @default(false)
+  hasAirConditioner   Boolean    @default(false)
+  hasWifi             Boolean    @default(false)
+  hasBarbeque         Boolean    @default(false)
+  hasFreeParking      Boolean    @default(false)
+  userId              String?
+  createdAt           DateTime   @default(now())
+  likes               Like[]
+  comments            Comment[]
+  bookings            Booking[]
+  user                User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
+model Faq {
+  id                  Int        @id @default(autoincrement())
+  title               String
+  desc                String
+}
+
+model Booking {
+  id                    Int        @id @default(autoincrement())
+  checkIn               DateTime
+  checkOut              DateTime
+  guestCount            Int
+  totalDays             Int
+  totalAmount           Int
+  roomId                Int
+  room                  Room       @relation(fields: [roomId], references: [id])
+  userId                String
+  user                  User       @relation(fields: [userId], references: [id])
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @default(now())
+  status                BookingStatus
+
+  Activity Activity[]
+}
+
+model Activity {
+  id         Int      @id @default(autoincrement())
+  title      String
+  images     String[]
+  imageKeys  String[]
+  address    String
+  lat        String
+  lng        String
+  category   String
+  desc       String
+  price      Int
+  userId     String?
+  createdAt  DateTime @default(now())
+  likes      Like[]
+  comments   Comment[]
+  bookings   Booking[]
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
+enum BookingStatus {
+  SUCCESS
+  CANCEL
+}
