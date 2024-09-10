@@ -1,21 +1,28 @@
 "use client"
 
-import { RoomFormType } from "@/interface"
-import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form"
+import {
+  FieldValues,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  Path,
+} from "react-hook-form"
 import DaumPostcodeEmbed from "react-daum-postcode"
 import { useState } from "react"
 
-interface AddressProps {
-  setValue: UseFormSetValue<RoomFormType>
-  register: UseFormRegister<RoomFormType>
-  errors: FieldErrors<RoomFormType>
+interface AddressProps<T extends FieldValues> {
+  setValue: UseFormSetValue<T>
+  register: UseFormRegister<T>
+  errors: FieldErrors<T>
+  label?: string
 }
 
-export default function AddressSearch({
+export default function AddressSearch<T extends FieldValues>({
   register,
   errors,
   setValue,
-}: AddressProps) {
+  label = "주소",
+}: AddressProps<T>) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const handleComplete = (data: any) => {
@@ -33,7 +40,7 @@ export default function AddressSearch({
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : ""
     }
 
-    setValue("address", fullAddress)
+    setValue("address" as Path<T>, fullAddress)
     setIsOpen(false)
   }
 
@@ -41,13 +48,13 @@ export default function AddressSearch({
     <>
       <div className="flex flex-col gap-2">
         <label htmlFor="address" className="text-lg font-semibold">
-          숙소 위치
+          {label}
         </label>
         <div className="grid md:grid-cols-4 gap-6">
           <input
             readOnly
-            placeholder="주소를 입력해주세요"
-            {...register("address", { required: true })}
+            placeholder={`${label}를 입력해주세요`}
+            {...register("address" as Path<T>, { required: true })}
             className="col-span-3 block w-full outline-none px-4 py-2 rounded-lg border-2 focus:border-black placeholder:text-gray-400"
           />
           <button
@@ -58,7 +65,8 @@ export default function AddressSearch({
             주소 검색
           </button>
         </div>
-        {errors.address && errors.address.type === "required" && (
+        {}
+        {errors.address && (
           <span className="text-red-600 text-sm">필수 항목입니다.</span>
         )}
       </div>

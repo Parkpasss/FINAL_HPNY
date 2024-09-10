@@ -84,7 +84,7 @@ export default function RoomRegisterFeature() {
 
   return (
     <>
-      <Stepper count={4} />
+      <Stepper count={4} totalSteps={5} />
       <form
         className="mt-10 flex flex-col gap-6 px-4"
         onSubmit={handleSubmit(onSubmit)}

@@ -1,64 +1,65 @@
 "use client"
 
-import { roomFormState } from "@/atom"
-import NextButton from "@/components/Form/NextButton"
-import Stepper from "@/components/Form/Stepper"
+import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
 import { useRecoilState } from "recoil"
+import { useForm } from "react-hook-form"
+import { activityFormState } from "@/atom"
+import Stepper from "@/components/Form/Stepper"
+import NextButton from "@/components/Form/NextButton"
 
-interface RoomInfoProps {
-  title?: string
-  desc?: string
-  price?: number
-  bedroomDesc?: string
+interface ActivityInfoProps {
+  title: string
+  desc: string
+  price: number
 }
 
-export default function RoomRegisterInfo() {
+export default function ActivityRegisterInfo() {
   const router = useRouter()
-  const [disableSubmit, setDisableSubmit] = useState<boolean>(false)
-  const [roomForm, setRoomForm] = useRecoilState(roomFormState)
+  const [activityForm, setActivityForm] = useRecoilState(activityFormState)
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<RoomInfoProps>()
+  } = useForm<ActivityInfoProps>()
 
-  const onSubmit = (data: RoomInfoProps) => {
-    setRoomForm({
-      ...roomForm,
-      title: data.title,
-      desc: data.desc,
-      bedroomDesc: data.bedroomDesc,
-      price: data.price,
+  const onSubmit = (data: ActivityInfoProps) => {
+    setActivityForm({
+      ...activityForm,
+      title: data.title || "",
+      desc: data.desc || "",
+      price: data.price || 0,
+      address: activityForm?.address || "",
+      images: activityForm?.images || [],
+      category: activityForm?.category || "",
+      lat: activityForm?.lat || "",
+      lng: activityForm?.lng || "",
     })
-    router.push("/rooms/register/address")
+    router.push("/activities/register/address")
   }
 
   useEffect(() => {
-    if (roomForm) {
-      setValue("bedroomDesc", roomForm?.bedroomDesc)
-      setValue("title", roomForm?.title)
-      setValue("price", roomForm?.price)
-      setValue("desc", roomForm?.desc)
+    if (activityForm) {
+      setValue("title", activityForm.title || "")
+      setValue("desc", activityForm.desc || "")
+      setValue("price", activityForm.price || 0)
     }
-  }, [roomForm, setValue])
+  }, [activityForm, setValue])
 
   return (
     <>
-      <Stepper count={2} totalSteps={5} />
+      <Stepper count={2} totalSteps={4} />
       <form
         className="mt-10 flex flex-col gap-6 px-4"
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="font-semibold text-lg md:text-2xl text-center">
-          숙소의 기본 정보를 입력해주세요
+          활동의 기본 정보를 입력해주세요
         </h1>
         <div className="flex flex-col gap-2">
           <label htmlFor="title" className="text-lg font-semibold">
-            숙소 이름
+            활동 이름
           </label>
           <input
             {...register("title", { required: true, maxLength: 30 })}
@@ -75,7 +76,7 @@ export default function RoomRegisterInfo() {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="desc" className="text-lg font-semibold">
-            숙소 설명
+            활동 설명
           </label>
           <textarea
             rows={3}
@@ -88,7 +89,7 @@ export default function RoomRegisterInfo() {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="price" className="text-lg font-semibold">
-            숙소 가격 (1박 기준)
+            활동 가격
           </label>
           <input
             type="number"
@@ -99,25 +100,7 @@ export default function RoomRegisterInfo() {
             <span className="text-red-600 text-sm">필수 항목입니다.</span>
           )}
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="bedroomDesc" className="text-lg font-semibold">
-            침실 설명
-          </label>
-          <textarea
-            rows={3}
-            {...register("bedroomDesc", { required: true, maxLength: 100 })}
-            className="outline-none px-4 py-2 rounded-lg border-2 focus:border-black resize-none"
-          />
-          {errors.bedroomDesc && errors.bedroomDesc.type === "required" && (
-            <span className="text-red-600 text-sm">필수 항목입니다.</span>
-          )}
-          {errors.bedroomDesc && errors.bedroomDesc.type === "maxLength" && (
-            <span className="text-red-600 text-sm">
-              설명은 100자 이내로 작성해주세요.
-            </span>
-          )}
-        </div>
-        <NextButton type="submit" disabled={isSubmitting || disableSubmit} />
+        <NextButton type="submit" disabled={isSubmitting} />
       </form>
     </>
   )

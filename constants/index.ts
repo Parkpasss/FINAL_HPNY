@@ -2,6 +2,7 @@ import {
   MdAddHomeWork,
   MdApartment,
   MdOutlineBedroomChild,
+  MdOutlineSelfImprovement,
   MdOutlineSurfing,
 } from "react-icons/md"
 import { GiHouse } from "react-icons/gi"
@@ -104,4 +105,25 @@ export const FeatureFormField: FieldProps[] = [
   { field: "hasWifi", label: "무료 와이파이" },
   { field: "hasBarbeque", label: "바베큐 시설" },
   { field: "hasFreeParking", label: "무료 주차" },
+]
+
+import { MdOutlineMiscellaneousServices } from "react-icons/md"
+import { AiOutlineShoppingCart } from "react-icons/ai"
+import { IoTicketOutline } from "react-icons/io5"
+
+export const ACTIVITY_CATEGORY_DATA = [
+  { title: "티켓", Icon: IoTicketOutline },
+  { title: "체험", Icon: MdOutlineSelfImprovement },
+  { title: "상품", Icon: AiOutlineShoppingCart },
+  { title: "기타", Icon: MdOutlineMiscellaneousServices },
+]
+
+export const ActivityEditField = [
+  "title",
+  "category",
+  "desc",
+  "price",
+  "address",
+  "images",
+  "imageKeys",
 ]

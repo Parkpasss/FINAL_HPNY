@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 
-import { roomFormState } from "@/atom"
+import { activityFormState } from "@/atom"
 import { useRouter } from "next/navigation"
 import { useRecoilState, useResetRecoilState } from "recoil"
 import { useForm } from "react-hook-form"
@@ -14,23 +14,23 @@ import { useState } from "react"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
 
-interface RoomImageProps {
+interface ActivityImageProps {
   images?: string[]
 }
 
-export default function RoomRegisterImage() {
+export default function ActivityRegisterImage() {
   const router = useRouter()
   const { data: session } = useSession()
-  const [roomForm, setRoomForm] = useRecoilState(roomFormState)
+  const [activityForm, setActivityForm] = useRecoilState(activityFormState)
   const [images, setImages] = useState<string[] | null>(null)
   const [disableSubmit, setDisableSubmit] = useState<boolean>(false)
-  const resetRoomForm = useResetRecoilState(roomFormState)
+  const resetActivityForm = useResetRecoilState(activityFormState)
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RoomImageProps>()
+  } = useForm<ActivityImageProps>()
 
   // 최대 5장 이미지 업로드 제한
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +60,6 @@ export default function RoomRegisterImage() {
     )
   }
 
-  // Cloudinary 업로드 함수
   async function uploadImages(images: string[] | null) {
     const uploadedImageUrls = []
 
@@ -70,7 +69,7 @@ export default function RoomRegisterImage() {
       const formData = new FormData()
 
       if (imageFile) {
-        formData.append("file", imageFile) // 이미지 파일 추가
+        formData.append("file", imageFile)
 
         if (process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET) {
           formData.append(
@@ -98,14 +97,14 @@ export default function RoomRegisterImage() {
     try {
       setDisableSubmit(true)
       const imageUrls = await uploadImages(images)
-      const result = await axios.post("/api/rooms", {
-        ...roomForm,
+      const result = await axios.post("/api/activities", {
+        ...activityForm,
         images: imageUrls,
       })
 
       if (result.status === 200) {
-        toast.success("숙소를 등록했습니다.")
-        resetRoomForm()
+        toast.success("활동을 등록했습니다.")
+        resetActivityForm()
         router.push("/")
       } else {
         toast.error("데이터 생성 중 문제가 발생했습니다.")
@@ -126,10 +125,10 @@ export default function RoomRegisterImage() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="font-semibold text-lg md:text-2xl text-center">
-          숙소의 사진을 추가해주세요
+          활동의 사진을 추가해주세요
         </h1>
         <p className="text-sm md:text-base text-gray-500 text-center">
-          숙소 사진은 최대 5장까지 추가할 수 있습니다.
+          활동 사진은 최대 5장까지 추가할 수 있습니다.
         </p>
         <div className="flex flex-col gap-2">
           <div className="col-span-full">

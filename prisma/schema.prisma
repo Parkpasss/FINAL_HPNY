@@ -76,23 +76,25 @@ model Comment {
   id            Int         @id @default(autoincrement())
   createdAt     DateTime    @default(now())
   body          String
-  roomId        Int
+  roomId        Int?
+  activityId    Int?
   userId        String
-  room          Room        @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room          Room?        @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  activity      Activity?    @relation(fields: [activityId], references: [id], onDelete: Cascade) // Activity와 관계 설정
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([userId, roomId])
-  Activity Activity[]
+  @@index([userId, activityId])
 }
 
 model Like {
   id              Int        @id @default(autoincrement())
   createdAt       DateTime   @default(now())
   userId          String
-  roomId          Int
-  room            Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  Activity Activity[]
+  roomId          Int?
+  activityId      Int?
+  room            Room?      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  activity        Activity?  @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Room {
@@ -139,15 +141,15 @@ model Booking {
   guestCount            Int
   totalDays             Int
   totalAmount           Int
-  roomId                Int
-  room                  Room       @relation(fields: [roomId], references: [id])
+  roomId                Int?
+  activityId            Int?
+  room                  Room?       @relation(fields: [roomId], references: [id])
+  activity              Activity?   @relation(fields: [activityId], references: [id])
   userId                String
-  user                  User       @relation(fields: [userId], references: [id])
-  createdAt             DateTime   @default(now())
-  updatedAt             DateTime   @default(now())
+  user                  User        @relation(fields: [userId], references: [id])
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @default(now())
   status                BookingStatus
-
-  Activity Activity[]
 }
 
 model Activity {

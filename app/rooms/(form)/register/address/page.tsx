@@ -39,7 +39,8 @@ export default function RoomRegisterAddress() {
 
   return (
     <>
-      <Stepper count={3} />
+      {}
+      <Stepper count={3} totalSteps={5} />
       <form
         className="mt-10 flex flex-col gap-6 px-4"
         onSubmit={handleSubmit(onSubmit)}

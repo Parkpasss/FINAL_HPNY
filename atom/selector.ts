@@ -9,7 +9,7 @@ export const calculatedFilterState = selector({
     const checkInDate = filter.checkIn ? dayjs(filter.checkIn) : dayjs()
     const checkOutDate = filter.checkOut ? dayjs(filter.checkOut) : dayjs()
     const guestCount = filter.guest || 1
-    const dayCount = checkOutDate?.diff(checkInDate, "days")
+    const dayCount = checkOutDate?.diff(checkInDate, "days") || 1
 
     return { guestCount, dayCount }
   },

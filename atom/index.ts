@@ -6,6 +6,7 @@ import {
   RoomFormType,
   RoomType,
   SearchProps,
+  ActivityFormType,
 } from "@/interface"
 import { atom } from "recoil"
 
@@ -65,6 +66,21 @@ export const roomFormState = atom<RoomFormType | null>({
     hasWifi: false,
     hasBarbeque: false,
     hasFreeParking: false,
+  },
+  effects_UNSTABLE: [persistAtom],
+})
+
+export const activityFormState = atom<ActivityFormType | null>({
+  key: "activityRegisterForm",
+  default: {
+    images: [],
+    title: "",
+    desc: "",
+    price: 0,
+    category: "",
+    lat: "",
+    lng: "",
+    address: "",
   },
   effects_UNSTABLE: [persistAtom],
 })

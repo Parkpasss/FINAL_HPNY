@@ -166,3 +166,33 @@ export interface RoomFormType {
 export interface SearchProps {
   q: string | null
 }
+
+export interface ActivityType {
+  id: number
+  title: string
+  images: string[]
+  imageKeys: string[]
+  address?: string
+  lat?: string
+  lng?: string
+  category: string
+  desc?: string
+  price: number
+  userId: string
+  createdAt: string
+  likes?: LikeType[]
+  comments?: Comment[]
+  bookings?: BookingType[]
+  user: UserType
+}
+
+export interface ActivityFormType {
+  title: string
+  desc: string
+  price: number
+  address?: string
+  images: string[]
+  category?: string
+  lat?: string
+  lng?: string
+}
